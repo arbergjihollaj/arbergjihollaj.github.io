@@ -5,74 +5,365 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Arber Gjihollaj – Embedded & IoT</title>
   <meta name="description" content="Portfolio von Arber Gjihollaj – Embedded Systems & IoT (ESP32). Projekte, Skills, Links." />
+
   <style>
-    :root { color-scheme: light; }
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    :root{
+      color-scheme: dark;
+
+      /* Apple-ish: ruhige Neutrals + Rot als Akzent */
+      --bg: #060608;
+      --panel: rgba(255,255,255,0.06);
+      --panel-strong: rgba(255,255,255,0.085);
+      --border: rgba(255,255,255,0.10);
+
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.66);
+      --subtle: rgba(255,255,255,0.48);
+
+      --accent: #ff2d2d;      /* rot */
+      --accent2: #b30000;     /* deep red */
+      --shadow: rgba(0,0,0,0.45);
+
+      --radius: 18px;
+      --radius2: 14px;
+      --max: 980px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", "SF Pro Text",
+                   Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       line-height: 1.55;
-      color: #111;
-      background: #fff;
+      color: var(--text);
+      background: radial-gradient(1200px 900px at 15% 10%, rgba(255,45,45,0.16), transparent 55%),
+                  radial-gradient(900px 700px at 80% 20%, rgba(179,0,0,0.14), transparent 52%),
+                  radial-gradient(1100px 900px at 55% 85%, rgba(255,45,45,0.10), transparent 60%),
+                  var(--bg);
+      overflow-x: hidden;
     }
-    .wrap { max-width: 900px; margin: 0 auto; padding: 48px 20px; }
-    header { display: flex; gap: 18px; align-items: baseline; flex-wrap: wrap; }
-    h1 { margin: 0; font-size: 34px; letter-spacing: -0.02em; }
-    .tag { font-size: 14px; padding: 4px 10px; border: 1px solid #ddd; border-radius: 999px; color: #333; }
-    .lead { margin: 18px 0 0; max-width: 70ch; color: #333; }
-    .links { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
-    a.btn {
-      display: inline-block;
+
+    /* dezente "grain" Textur für Apple-ish depth */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+    }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 54px 20px 42px;
+      position: relative;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent) 45%, rgba(255,45,45,0.2) 70%);
+      box-shadow: 0 0 18px rgba(255,45,45,0.55);
+      flex: 0 0 auto;
+    }
+
+    .brand strong{
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    nav{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    a.nav{
+      text-decoration:none;
+      color: rgba(255,255,255,0.78);
+      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    a.nav:hover{
+      color: rgba(255,255,255,0.92);
+      border-color: rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .hero{
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
+      border-radius: var(--radius);
+      padding: 26px 22px;
+      box-shadow: 0 18px 50px var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after{
+      /* rote Akzent-Linie (subtil) */
+      content:"";
+      position:absolute;
+      left: 22px;
+      top: 0;
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity: 0.9;
+    }
+
+    h1{
+      margin: 0;
+      font-size: clamp(30px, 4vw, 44px);
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle{
+      margin: 10px 0 0;
+      color: var(--muted);
+      max-width: 72ch;
+      font-size: 15.5px;
+    }
+
+    .chips{
+      margin-top: 16px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.78);
+    }
+    .chip.accent{
+      border-color: rgba(255,45,45,0.38);
+      background: rgba(255,45,45,0.08);
+      color: rgba(255,255,255,0.88);
+      box-shadow: 0 0 0 1px rgba(255,45,45,0.12) inset;
+    }
+
+    .cta{
+      margin-top: 18px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
       padding: 10px 12px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      text-decoration: none;
-      color: #111;
-      background: #fafafa;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.90);
+      text-decoration:none;
+      font-size: 13.5px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-    a.btn:hover { background: #f3f3f3; }
-    hr { border: 0; border-top: 1px solid #eee; margin: 36px 0; }
-    h2 { margin: 0 0 12px; font-size: 18px; letter-spacing: -0.01em; }
-    .grid { display: grid; gap: 14px; grid-template-columns: repeat(12, 1fr); }
-    .card {
+    .btn:hover{ background: rgba(255,255,255,0.08); }
+    .btn.primary{
+      border-color: rgba(255,45,45,0.35);
+      background: linear-gradient(180deg, rgba(255,45,45,0.18), rgba(255,45,45,0.08));
+      box-shadow: 0 10px 30px rgba(255,45,45,0.12);
+    }
+
+    hr{
+      border: 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin: 28px 0;
+    }
+
+    h2{
+      margin: 0 0 12px;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.74);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .card{
       grid-column: span 12;
-      border: 1px solid #eee;
-      border-radius: 14px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.045);
       padding: 14px 14px 12px;
-      background: #fff;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.28);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: relative;
+      overflow:hidden;
     }
-    @media (min-width: 720px) {
-      .card { grid-column: span 6; }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset: 0;
+      background: radial-gradient(650px 180px at 20% 0%, rgba(255,45,45,0.10), transparent 60%);
+      opacity: 0.55;
+      pointer-events:none;
     }
-    .card h3 { margin: 0 0 8px; font-size: 16px; }
-    .meta { font-size: 13px; color: #444; margin: 0 0 10px; }
-    .pillrow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-    .pill { font-size: 12px; padding: 3px 8px; border: 1px solid #e6e6e6; border-radius: 999px; color: #333; background: #fbfbfb; }
-    .small { font-size: 13px; color: #444; margin: 0; }
-    footer { margin-top: 34px; font-size: 13px; color: #555; }
-    code.inline { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.95em; }
+
+    .card > *{ position: relative; }
+
+    @media (min-width: 720px){
+      .card{ grid-column: span 6; }
+    }
+
+    .card h3{
+      margin: 0 0 6px;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .meta{
+      margin: 0 0 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .small{
+      margin: 0;
+      color: rgba(255,255,255,0.78);
+      font-size: 13.5px;
+    }
+
+    .pillrow{
+      margin-top: 12px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill{
+      font-size: 12px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(0,0,0,0.10);
+      color: rgba(255,255,255,0.72);
+    }
+
+    .cardlinks{
+      margin-top: 12px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mutelink{
+      color: rgba(255,255,255,0.80);
+      text-decoration:none;
+      font-size: 13px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.04);
+    }
+    .mutelink:hover{ background: rgba(255,255,255,0.07); }
+    .mutelink.live{
+      border-color: rgba(255,45,45,0.30);
+      background: rgba(255,45,45,0.08);
+    }
+
+    footer{
+      margin-top: 26px;
+      color: var(--subtle);
+      font-size: 12.5px;
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    code.inline{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95em;
+      color: rgba(255,255,255,0.88);
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <header>
-      <h1>Arber Gjihollaj</h1>
-      <span class="tag">Embedded Systems · IoT · ESP32</span>
-    </header>
+    <div class="topbar">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <strong>Arber Gjihollaj</strong>
+      </div>
 
-    <p class="lead">
-      Ich baue kompakte IoT-Prototypen und Embedded-Projekte – aktuell vor allem mit
-      <span class="inline"><code class="inline">ESP32</code></span> (Arduino Framework), Sensorik und Web-Dashboards.
-      Hier findest du ausgewählte Projekte, Skills und Links.
-    </p>
-
-    <div class="links">
-      <a class="btn" href="https://github.com/arbergjihollaj" target="_blank" rel="noreferrer">GitHub</a>
-      <a class="btn" href="#projects">Projekte</a>
-      <a class="btn" href="#contact">Kontakt</a>
-      <!-- Optional: später CV als PDF hochladen und hier verlinken -->
-      <!-- <a class="btn" href="/Arber_Gjihollaj_CV.pdf" target="_blank" rel="noreferrer">CV (PDF)</a> -->
+      <nav>
+        <a class="nav" href="#projects">Projekte</a>
+        <a class="nav" href="#about">Über mich</a>
+        <a class="nav" href="#contact">Kontakt</a>
+      </nav>
     </div>
+
+    <section class="hero">
+      <h1>Embedded Systems & IoT</h1>
+      <p class="subtitle">
+        Ich baue kompakte IoT-Prototypen und Embedded-Projekte – aktuell vor allem mit
+        <code class="inline">ESP32</code> (Arduino Framework), Sensorik und Web-Dashboards.
+        Diese Seite ist mein Bewerbungs-Portfolio.
+      </p>
+
+      <div class="chips">
+        <span class="chip accent">ESP32</span>
+        <span class="chip">Arduino</span>
+        <span class="chip">HTTP/JSON</span>
+        <span class="chip">Telemetry</span>
+        <span class="chip">Web UI</span>
+      </div>
+
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/arbergjihollaj" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="btn" href="#projects">Projekte ansehen</a>
+        <!-- Optional später:
+        <a class="btn" href="/Arber_Gjihollaj_CV.pdf" target="_blank" rel="noreferrer">CV (PDF)</a> -->
+      </div>
+    </section>
 
     <hr />
 
@@ -81,34 +372,34 @@
 
       <div class="grid">
         <article class="card">
-          <h3>ESP32 Smart Height Meter (Demo)</h3>
+          <h3>ESP32 Smart Height Meter</h3>
           <p class="meta">WLAN · Live Telemetrie · Dashboard (in Arbeit)</p>
           <p class="small">
-            Sensorwerte werden erfasst und als Live-Status angezeigt. Ziel: <code class="inline">/esp1</code> Demo-Seite
+            Sensorwerte erfassen und als Live-Status anzeigen. Ziel: <code class="inline">/esp1</code> Demo-Seite
             mit Online/Offline, Telemetrie und optionaler Steuerung.
           </p>
           <div class="pillrow">
-            <span class="pill">ESP32</span><span class="pill">HTTP/JSON</span><span class="pill">Web UI</span>
+            <span class="pill">ESP32</span><span class="pill">REST</span><span class="pill">Realtime UI</span>
           </div>
-          <div class="links" style="margin-top:12px;">
-            <a class="btn" href="#" title="Später Repo-Link eintragen">Repo</a>
-            <a class="btn" href="#" title="Später Live-Demo-Link eintragen">Live Demo</a>
+          <div class="cardlinks">
+            <a class="mutelink" href="#" title="Später Repo-Link eintragen">Repo</a>
+            <a class="mutelink live" href="#" title="Später Live-Demo-Link eintragen">Live Demo</a>
           </div>
         </article>
 
         <article class="card">
-          <h3>ESP32 Battery Monitor (Demo)</h3>
-          <p class="meta">LiPo · Spannungsmessung · Logging (in Arbeit)</p>
+          <h3>ESP32 Battery Monitor</h3>
+          <p class="meta">LiPo · ADC · Logging (in Arbeit)</p>
           <p class="small">
-            LiPo-Spannung/Status messen, Grenzwerte erkennen und Werte loggen. Später mit sauberem
-            „last seen“ + Battery-Status auf der Website.
+            LiPo-Spannung messen, Grenzwerte erkennen und Werte loggen. Später mit „last seen“
+            + Battery-Status im Dashboard.
           </p>
           <div class="pillrow">
             <span class="pill">LiPo</span><span class="pill">ADC</span><span class="pill">Telemetry</span>
           </div>
-          <div class="links" style="margin-top:12px;">
-            <a class="btn" href="#" title="Später Repo-Link eintragen">Repo</a>
-            <a class="btn" href="#" title="Später Live-Demo-Link eintragen">Live Demo</a>
+          <div class="cardlinks">
+            <a class="mutelink" href="#" title="Später Repo-Link eintragen">Repo</a>
+            <a class="mutelink live" href="#" title="Später Live-Demo-Link eintragen">Live Demo</a>
           </div>
         </article>
 
@@ -121,13 +412,13 @@
           <div class="pillrow">
             <span class="pill">Audio</span><span class="pill">Bluetooth</span><span class="pill">ESP32</span>
           </div>
-          <div class="links" style="margin-top:12px;">
-            <a class="btn" href="#" title="Später Repo-Link eintragen">Repo</a>
+          <div class="cardlinks">
+            <a class="mutelink" href="#" title="Später Repo-Link eintragen">Repo</a>
           </div>
         </article>
 
         <article class="card">
-          <h3>FPV / Drone Electronics (Side Project)</h3>
+          <h3>FPV / Drone Electronics</h3>
           <p class="meta">Hardware · Telemetry · Integration (in Arbeit)</p>
           <p class="small">
             Hardware-Experimente rund um FPV-Komponenten und Telemetrie-Anbindungen.
@@ -135,8 +426,8 @@
           <div class="pillrow">
             <span class="pill">Electronics</span><span class="pill">Telemetry</span><span class="pill">Prototyping</span>
           </div>
-          <div class="links" style="margin-top:12px;">
-            <a class="btn" href="#" title="Später Details/Repo-Link eintragen">Details</a>
+          <div class="cardlinks">
+            <a class="mutelink" href="#" title="Später Details-Link eintragen">Details</a>
           </div>
         </article>
       </div>
@@ -144,22 +435,32 @@
 
     <hr />
 
+    <section id="about">
+      <h2>Über mich</h2>
+      <p class="small">
+        Fokus: Embedded Systems, IoT und Prototyping. Ich mag klare Architektur, saubere Schnittstellen
+        und Projekte, die man live demonstrieren kann.
+      </p>
+    </section>
+
+    <hr />
+
     <section id="contact">
       <h2>Kontakt</h2>
       <p class="small">
-        Schreib mir am besten über GitHub oder füge hier später deine E-Mail/LinkedIn hinzu.
+        Am schnellsten über GitHub. (E-Mail/LinkedIn kannst du später hier ergänzen.)
       </p>
-
-      <!-- Optional: Wenn du willst, kannst du hier später echte Links ergänzen -->
-      <div class="links" style="margin-top:12px;">
-        <a class="btn" href="https://github.com/arbergjihollaj" target="_blank" rel="noreferrer">GitHub Profil</a>
-        <!-- <a class="btn" href="mailto:deine.mail@example.com">E-Mail</a> -->
-        <!-- <a class="btn" href="https://www.linkedin.com/in/deinprofil" target="_blank" rel="noreferrer">LinkedIn</a> -->
+      <div class="cta" style="margin-top:12px;">
+        <a class="btn primary" href="https://github.com/arbergjihollaj" target="_blank" rel="noreferrer">GitHub Profil</a>
+        <!-- Optional später:
+        <a class="btn" href="mailto:deine.mail@example.com">E-Mail</a>
+        <a class="btn" href="https://www.linkedin.com/in/deinprofil" target="_blank" rel="noreferrer">LinkedIn</a> -->
       </div>
     </section>
 
     <footer>
-      <p>© <span id="y"></span> Arber Gjihollaj · Built with GitHub Pages</p>
+      <span>© <span id="y"></span> Arber Gjihollaj</span>
+      <span>Built with GitHub Pages</span>
     </footer>
   </div>
 
