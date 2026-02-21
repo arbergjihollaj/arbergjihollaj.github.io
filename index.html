@@ -1,10 +1,170 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="de">
 <head>
-  <title>Arber IoT Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Arber Gjihollaj – Embedded & IoT</title>
+  <meta name="description" content="Portfolio von Arber Gjihollaj – Embedded Systems & IoT (ESP32). Projekte, Skills, Links." />
+  <style>
+    :root { color-scheme: light; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      line-height: 1.55;
+      color: #111;
+      background: #fff;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 48px 20px; }
+    header { display: flex; gap: 18px; align-items: baseline; flex-wrap: wrap; }
+    h1 { margin: 0; font-size: 34px; letter-spacing: -0.02em; }
+    .tag { font-size: 14px; padding: 4px 10px; border: 1px solid #ddd; border-radius: 999px; color: #333; }
+    .lead { margin: 18px 0 0; max-width: 70ch; color: #333; }
+    .links { margin-top: 18px; display: flex; gap: 10px; flex-wrap: wrap; }
+    a.btn {
+      display: inline-block;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #111;
+      background: #fafafa;
+    }
+    a.btn:hover { background: #f3f3f3; }
+    hr { border: 0; border-top: 1px solid #eee; margin: 36px 0; }
+    h2 { margin: 0 0 12px; font-size: 18px; letter-spacing: -0.01em; }
+    .grid { display: grid; gap: 14px; grid-template-columns: repeat(12, 1fr); }
+    .card {
+      grid-column: span 12;
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      background: #fff;
+    }
+    @media (min-width: 720px) {
+      .card { grid-column: span 6; }
+    }
+    .card h3 { margin: 0 0 8px; font-size: 16px; }
+    .meta { font-size: 13px; color: #444; margin: 0 0 10px; }
+    .pillrow { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .pill { font-size: 12px; padding: 3px 8px; border: 1px solid #e6e6e6; border-radius: 999px; color: #333; background: #fbfbfb; }
+    .small { font-size: 13px; color: #444; margin: 0; }
+    footer { margin-top: 34px; font-size: 13px; color: #555; }
+    code.inline { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.95em; }
+  </style>
 </head>
+
 <body>
-  <h1>Willkommen auf meiner IoT Portfolio Website 🚀</h1>
-  <p>ESP32 Projekte folgen bald.</p>
+  <div class="wrap">
+    <header>
+      <h1>Arber Gjihollaj</h1>
+      <span class="tag">Embedded Systems · IoT · ESP32</span>
+    </header>
+
+    <p class="lead">
+      Ich baue kompakte IoT-Prototypen und Embedded-Projekte – aktuell vor allem mit
+      <span class="inline"><code class="inline">ESP32</code></span> (Arduino Framework), Sensorik und Web-Dashboards.
+      Hier findest du ausgewählte Projekte, Skills und Links.
+    </p>
+
+    <div class="links">
+      <a class="btn" href="https://github.com/arbergjihollaj" target="_blank" rel="noreferrer">GitHub</a>
+      <a class="btn" href="#projects">Projekte</a>
+      <a class="btn" href="#contact">Kontakt</a>
+      <!-- Optional: später CV als PDF hochladen und hier verlinken -->
+      <!-- <a class="btn" href="/Arber_Gjihollaj_CV.pdf" target="_blank" rel="noreferrer">CV (PDF)</a> -->
+    </div>
+
+    <hr />
+
+    <section id="projects">
+      <h2>Projekte</h2>
+
+      <div class="grid">
+        <article class="card">
+          <h3>ESP32 Smart Height Meter (Demo)</h3>
+          <p class="meta">WLAN · Live Telemetrie · Dashboard (in Arbeit)</p>
+          <p class="small">
+            Sensorwerte werden erfasst und als Live-Status angezeigt. Ziel: <code class="inline">/esp1</code> Demo-Seite
+            mit Online/Offline, Telemetrie und optionaler Steuerung.
+          </p>
+          <div class="pillrow">
+            <span class="pill">ESP32</span><span class="pill">HTTP/JSON</span><span class="pill">Web UI</span>
+          </div>
+          <div class="links" style="margin-top:12px;">
+            <a class="btn" href="#" title="Später Repo-Link eintragen">Repo</a>
+            <a class="btn" href="#" title="Später Live-Demo-Link eintragen">Live Demo</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>ESP32 Battery Monitor (Demo)</h3>
+          <p class="meta">LiPo · Spannungsmessung · Logging (in Arbeit)</p>
+          <p class="small">
+            LiPo-Spannung/Status messen, Grenzwerte erkennen und Werte loggen. Später mit sauberem
+            „last seen“ + Battery-Status auf der Website.
+          </p>
+          <div class="pillrow">
+            <span class="pill">LiPo</span><span class="pill">ADC</span><span class="pill">Telemetry</span>
+          </div>
+          <div class="links" style="margin-top:12px;">
+            <a class="btn" href="#" title="Später Repo-Link eintragen">Repo</a>
+            <a class="btn" href="#" title="Später Live-Demo-Link eintragen">Live Demo</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>Audio / Bluetooth Board (ESP32 Enhance2.1)</h3>
+          <p class="meta">Audio · Bluetooth · Prototyping (in Arbeit)</p>
+          <p class="small">
+            Experimente mit Audio-I/O und Bluetooth auf einem ESP32 Audio-Devboard.
+          </p>
+          <div class="pillrow">
+            <span class="pill">Audio</span><span class="pill">Bluetooth</span><span class="pill">ESP32</span>
+          </div>
+          <div class="links" style="margin-top:12px;">
+            <a class="btn" href="#" title="Später Repo-Link eintragen">Repo</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3>FPV / Drone Electronics (Side Project)</h3>
+          <p class="meta">Hardware · Telemetry · Integration (in Arbeit)</p>
+          <p class="small">
+            Hardware-Experimente rund um FPV-Komponenten und Telemetrie-Anbindungen.
+          </p>
+          <div class="pillrow">
+            <span class="pill">Electronics</span><span class="pill">Telemetry</span><span class="pill">Prototyping</span>
+          </div>
+          <div class="links" style="margin-top:12px;">
+            <a class="btn" href="#" title="Später Details/Repo-Link eintragen">Details</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <hr />
+
+    <section id="contact">
+      <h2>Kontakt</h2>
+      <p class="small">
+        Schreib mir am besten über GitHub oder füge hier später deine E-Mail/LinkedIn hinzu.
+      </p>
+
+      <!-- Optional: Wenn du willst, kannst du hier später echte Links ergänzen -->
+      <div class="links" style="margin-top:12px;">
+        <a class="btn" href="https://github.com/arbergjihollaj" target="_blank" rel="noreferrer">GitHub Profil</a>
+        <!-- <a class="btn" href="mailto:deine.mail@example.com">E-Mail</a> -->
+        <!-- <a class="btn" href="https://www.linkedin.com/in/deinprofil" target="_blank" rel="noreferrer">LinkedIn</a> -->
+      </div>
+    </section>
+
+    <footer>
+      <p>© <span id="y"></span> Arber Gjihollaj · Built with GitHub Pages</p>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
