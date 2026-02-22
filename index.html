@@ -211,17 +211,18 @@
     }
 
     .btn.insta {
-      background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
-      color: white;
-      border: none;
-      font-weight: 500;
-      box-shadow: 0 10px 30px rgba(214, 41, 118, 0.35);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
-
-    .btn.insta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 40px rgba(214, 41, 118, 0.5);
+    
+    .btn.insta::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: inherit;
+      filter: blur(12px);
+      opacity: 0.6;
+      z-index: -1;
     }
       
     hr{
@@ -468,7 +469,7 @@
     <section id="contact">
       <h2>Kontakt</h2>
       <p class="small">
-        test #4
+        test #5
       </p>
       <div class="cta" style="margin-top:12px;">
         <a class="btn primary" href="https://github.com/arbergjihollaj" target="_blank" rel="noreferrer">GitHub Profil</a>
